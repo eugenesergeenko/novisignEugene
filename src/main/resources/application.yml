@@ -1,0 +1,55 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: slideshow-app
+
+  r2dbc:
+    url: ${SPRING_R2DBC_URL:r2dbc:mysql://localhost:3306/novi}
+    username: ${SPRING_R2DBC_USERNAME:root}
+    password: ${SPRING_R2DBC_PASSWORD:password}
+    pool:
+      enabled: true
+
+  flyway:
+    enabled: false
+
+  main:
+    web-application-type: reactive
+
+  # ✅ Swagger Configuration (Springdoc OpenAPI)
+  springdoc:
+    api-docs:
+      enabled: true
+      path: /v3/api-docs  # OpenAPI JSON URL: http://localhost:8080/v3/api-docs
+    swagger-ui:
+      enabled: true
+      path: /swagger-ui.html  # Swagger UI URL: http://localhost:8080/swagger-ui.html
+      operations-sorter: method  # Sort endpoints by method (GET, POST, etc.)
+      tags-sorter: alpha  # Sort API tags alphabetically
+    show-actuator: true  # Show Actuator endpoints in Swagger
+
+  # ✅ CORS Configuration (Allow Frontend Requests)
+  web:
+    cors:
+      allowed-origins: "http://localhost:3000"
+      allowed-methods: "*"
+      allowed-headers: "*"
+      allow-credentials: true
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG  # Debug HTTP requests
+    org.springframework.r2dbc: DEBUG  # Debug database queries
+    org.testcontainers: INFO  # Testcontainers logging
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics
+  endpoint:
+    health:
+      show-details: always
