@@ -12,6 +12,12 @@ spring:
     pool:
       enabled: true
 
+  sql:
+    init:
+      mode: always
+      platform: mysql
+      schema-locations: classpath:schema.sql
+
   flyway:
     enabled: false
 
